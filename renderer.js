@@ -8,28 +8,38 @@ async function loadTasks() {
 function renderTasks() {
   const list = document.getElementById('taskList');
   list.innerHTML = '';
+
   tasks.forEach((task, index) => {
     const li = document.createElement('li');
     li.textContent = task.text;
-    if (task.done) li.style.textDecoration = 'line-through';
-    li.onclick = () => toggleTask(index);
+
+    if (task.done) {
+      li.classList.add('done');
+    }
+
+    li.addEventListener('click', () => toggleTask(index));
     list.appendChild(li);
   });
-  window.electronAPI.saveTasks(tasks);
 }
 
 function addTask() {
   const input = document.getElementById('taskInput');
-  if (input.value.trim() !== '') {
-    tasks.push({ text: input.value, done: false });
+  const taskText = input.value.trim();
+
+  if (taskText !== '') {
+    tasks.push({ text: taskText, done: false });
     input.value = '';
-    renderTasks();
+    renderTasks(); // Only update the screen — no save yet
   }
 }
 
 function toggleTask(index) {
   tasks[index].done = !tasks[index].done;
-  renderTasks();
+  renderTasks(); 
 }
 
-loadTasks();
+document.getElementById('addTaskBtn').addEventListener('click', addTask);
+document.getElementById('saveTasksBtn').addEventListener('click', () => window.electronAPI.saveTasks(tasks));
+document.getElementById('loadTasksBtn').addEventListener('click', loadTasks);
+
+

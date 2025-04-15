@@ -13,5 +13,5 @@ This is a simple desktop To-Do List program built with Electron.
 
 1. Clone the repo:
    ```bash
-   git clone https://github.com/YOUR_GITHUB_NAME/electron-todo.git
+   git clone https://github.com/HaydenK123/electron-todo.git
    cd electron-todo
